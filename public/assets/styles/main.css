@@ -1,0 +1,62 @@
+.grillaProductos {
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+.grillaProductos__tarjeta {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid;
+}
+
+.grillaProductos__tarjeta__boximg {
+  display: flex;
+  justify-content: center;
+}
+
+.productData {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2rem;
+}
+.delete {
+  display: flex;
+  justify-content: center;
+}
+
+.update {
+  width: 30%;
+  align-self: center;
+}
+
+.addProduct {
+  border: 1px solid;
+  margin-bottom: 4rem;
+}
+
+.addProduct form {
+  display: flex;
+  flex-direction: column;
+}
+
+.addProduct form button {
+  width: 30%;
+  align-self: center;
+  margin-bottom: 2rem;
+}
+
+#cartsContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 4rem;
+}
+
+.cart {
+  flex-basis: 25%;
+  padding: 2rem;
+}
+
+.cart__products {
+  border: 1px solid;
+}
