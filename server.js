@@ -33,19 +33,7 @@ io.on("connection", (socket) => {
   // Cuando el front avisa que se agregó un producto
   // el back le avisa a todos los sockets que actualicen el producto
   socket.on("products", (data) => {
-    fetch("http://localhost:8080/productos", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    })
-      .then((res) => {
-        // Una vez se realiza el post, se emite el mensaje de respuesta
-        // así se les actualiza la vista a los clientes
-        io.sockets.emit("products", res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    io.sockets.emit("products", "actualizar");
   });
 
   // Idem para carts

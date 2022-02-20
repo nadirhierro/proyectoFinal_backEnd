@@ -76,7 +76,7 @@ socket.on("products", (data) => {
               return res.json();
             })
             .then((json) => {
-              socket.emit("productos", json);
+              socket.emit("products", json);
             });
         });
       }
