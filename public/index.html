@@ -11,6 +11,12 @@
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./assets/styles/main.css" />
     <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
     <script src="/socket.io/socket.io.js"></script>
@@ -22,7 +28,7 @@
         class="row justify-content-center mt-5 grillaProductos"
       ></div>
       <div class="row justify-content-center">
-        <div class="col-6 mt-2 addProduct">
+        <div class="col-4 mt-4 addProduct">
           <h2 class="text-center">Agregar un producto</h2>
           <form id="newProducts">
             <div class="mb-3">
@@ -53,14 +59,14 @@
               <label for="stock" class="form-label">Product stock</label>
               <input type="text" class="form-control" name="stock" />
             </div>
-            <button type="submit" class="btn btn-primary">Agregar</button>
+            <button type="submit" class="btn">Agregar</button>
           </form>
         </div>
       </div>
       <div class="row carts justify-content-center" id="carts">
         <h2 class="text-center">Carritos</h2>
         <form class="d-flex justify-content-center" id="newCart">
-          <button type="submit" class="btn btn-primary">Agregar Carrito</button>
+          <button type="submit" class="btn">Agregar Carrito</button>
         </form>
         <div class="col-12" id="cartsContainer"></div>
       </div>

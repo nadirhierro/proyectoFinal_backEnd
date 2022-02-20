@@ -3,45 +3,44 @@ let newCart = document.getElementById("newCart");
 // Template que renderiza según si hay carts, y si estos tienen productos
 
 let cartTemplate = `
- {{#if carts}}
-    {{#each carts}}
-        <div class="cart" name="{{this.id}}">
-            <h4>ID :{{this.id}}</h4>
-            <h5>Timestamp: {{this.timestamp}}</h5>
-            <div class="cart__products">
-                {{#if this.products}}
-                {{#each this.products}}
-                <div class="cart__products__product">
-                    <p>nombre: {{this.name}}</p>
-                    <p>precio: {{this.price}}</p>
-                    <form class="cartProductDelete" name="{{this.id}}">
-                        <button type="submit" class="btn btn-primary"> Quitar producto</button>
-                    </form>
-                </div>
-                {{/each}}
-                <form class="cart__productAdd" name="{{this.id}}">
-                <h3>Agregar producto al carrito</h3>
-                <label for="id">ID</label>
-                <input type="text" name="id" />
-                <button type="submit" class="btn btn-primary">Agregar</button>
-                 </form>
-                {{else}}
-                <h3 class="mb-3">No hay productos en el carrito</h3>
-                <form class="cart__productAdd" name="{{this.id}}">
-                    <h3>Agregar producto al carrito</h3>
-                    <label for="id">ID</label>
-                    <input type="text" name="id" />
-                    <button type="submit" class="btn btn-primary">Agregar</button>
-                </form>
-                {{/if}}
+{{#if carts}}
+  {{#each carts}}
+    <div class="cart" name="{{this.id}}">
+      <h4>ID :{{this.id}}</h4>
+      <h5>Timestamp: {{this.timestamp}}</h5>
+      <div class="cart__products">
+        <h4>Productos del carrito</h4>
+          {{#if this.products}}
+          {{#each this.products}}
+            <div class="cart__products__product">
+              <p>nombre: {{this.name}}</p>
+              <p>precio: {{this.price}}</p>
+              <form class="cartProductDelete" name="{{this.id}}">
+                <button type="submit" class="btn btn-primary"> Quitar producto</button>
+              </form>
             </div>
-            <form class="cartDelete">
-                <button type="submit" class="btn btn-primary">Eliminar Carrito</button>
-            </form>
-        </div>
-    {{/each}}
-    {{else}}
-    <h2 class="text-center">No hay carritos activos</h2>
+          {{/each}}
+          {{else}}
+          <h3 class="mb-3 text-center">No hay productos en el carrito</h3>
+          {{/if}}
+      </div>
+      <div class="cart__forms">
+        <form class="cart__productAdd" name="{{this.id}}">
+          <h3>Agregar producto al carrito</h3>
+          <div class="mb-3">
+            <label for="id">ID</label>
+            <input type="text" name="id" />
+          </div>
+          <button type="submit" class="btn btn-primary">Agregar</button>
+        </form>
+        <form class="cartDelete">
+          <button type="submit" class="btn btn-primary">Eliminar Carrito</button>
+        </form>
+      </div>
+    </div>
+  {{/each}}
+{{else}}
+<h2 class="text-center">No hay carritos activos</h2>
 {{/if}}
 `;
 
@@ -79,7 +78,8 @@ socket.on("carts", (data) => {
       for (let i = 0; i < cartDelete.length; i++) {
         cartDelete[i].addEventListener("submit", (event) => {
           event.preventDefault();
-          let cartId = event.target.parentNode.getAttribute("name");
+          let cartId = event.target.parentNode.parentNode.getAttribute("name");
+          console.log(cartId);
           fetch(`http://localhost:8080/api/cart/${cartId}`, {
             method: "DELETE",
           })
