@@ -158,10 +158,10 @@ formProducts.addEventListener("submit", (event) => {
     body: JSON.stringify(product),
   })
     .then((res) => {
-      res.json();
+      return res.json();
     })
     .then((json) => {
-      socket.emit("products", product);
+      socket.emit("products", json);
     })
     .catch((err) => {
       console.log(err);
