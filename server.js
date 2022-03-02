@@ -1,7 +1,7 @@
 import express from "express";
 import { Server } from "socket.io";
 import { createServer } from "http";
-import fetch from "node-fetch";
+import config from "./config/index.js";
 import routerProducts from "./routes/routerProducts/routerProducts.js";
 import routerCart from "./routes/routerCart/routerCart.js";
 
@@ -9,7 +9,7 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer);
 
-const PORT = 8080;
+const PORT = config.port;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
