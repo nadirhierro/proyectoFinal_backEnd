@@ -3,7 +3,7 @@ import { Server } from "socket.io";
 import { createServer } from "http";
 import cors from "cors";
 import { config } from "./config/index.js";
-import routerProducts from "./routes/routerProducts/routerProducts.js";
+import { routerProducts } from "./routes/routerProducts/routerProducts.js";
 import routerCart from "./routes/routerCart/routerCart.js";
 
 const app = express();

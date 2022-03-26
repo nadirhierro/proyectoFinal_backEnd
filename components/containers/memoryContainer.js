@@ -12,10 +12,9 @@ export default class memoryContainer {
   save(obj) {
     let id = 1;
     if (this.container.length > 0) {
-      let ids = data.map((item) => item._id);
+      let ids = this.container.map((item) => item._id);
       id = Math.max.apply(null, ids) + 1;
     }
-
     let newObject = {
       _id: id,
       timestamp: moment().format("DD/MM/YYYY HH:MM:SS"),
@@ -51,8 +50,9 @@ export default class memoryContainer {
   }
 
   deleteById(id) {
-    if (this.container.find((item) => item._id == id)) {
-      this.container.filter((data) => data._id != id);
+    let obj = this.getById(id);
+    if (obj) {
+      this.container.splice(this.container.indexOf(obj), 1);
       return true;
     } else {
       return false;

@@ -34,7 +34,7 @@ export default class memoryDaoProducts extends memoryContainer {
   changeProduct(productId, productData) {
     let validated = this.validate(productData);
     if (validated) {
-      let product = { id: productId, ...productData };
+      let product = { _id: productId, ...productData };
       let changed = this.change(product);
       if (changed) {
         return { state: `Producto con id ${productId} cambiado` };

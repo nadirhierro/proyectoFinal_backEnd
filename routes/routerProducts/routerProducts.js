@@ -5,10 +5,10 @@ const { Router } = express;
 
 const products = new productDatabase();
 
-let routerProductos = new Router();
+let routerProducts = new Router();
 let admin = true;
 
-routerProductos.get("/:id?", async (req, res, next) => {
+routerProducts.get("/:id?", async (req, res, next) => {
   try {
     let id = req.params.id;
     if (id) {
@@ -24,7 +24,7 @@ routerProductos.get("/:id?", async (req, res, next) => {
   }
 });
 
-routerProductos.post("/", async (req, res, next) => {
+routerProducts.post("/", async (req, res, next) => {
   try {
     if (admin) {
       let product = req.body;
@@ -41,7 +41,7 @@ routerProductos.post("/", async (req, res, next) => {
   }
 });
 
-routerProductos.put("/:id", async (req, res, next) => {
+routerProducts.put("/:id", async (req, res, next) => {
   try {
     if (admin) {
       let id = req.params.id;
@@ -59,7 +59,7 @@ routerProductos.put("/:id", async (req, res, next) => {
   }
 });
 
-routerProductos.delete("/:id", async (req, res, next) => {
+routerProducts.delete("/:id", async (req, res, next) => {
   try {
     if (admin) {
       let id = req.params.id;
@@ -76,4 +76,4 @@ routerProductos.delete("/:id", async (req, res, next) => {
   }
 });
 
-export default routerProductos;
+export { routerProducts, products };

@@ -1,7 +1,5 @@
 import memoryContainer from "../../memoryContainer.js";
-import memoryDaoProducts from "../productsContainer/memoryDaoProducts.js";
-
-let Products = new memoryDaoProducts();
+import { products } from "../../../../routes/routerProducts/routerProducts.js";
 
 export default class memoryDaoCarts extends memoryContainer {
   constructor() {
@@ -24,7 +22,7 @@ export default class memoryDaoCarts extends memoryContainer {
 
   addProduct(cartId, productId) {
     let cart = this.getById(cartId);
-    let productToAdd = Products.getById(productId);
+    let productToAdd = products.getById(Number(productId));
     if (productToAdd) {
       cart.products.push(productToAdd);
       this.change(cart);
@@ -37,7 +35,7 @@ export default class memoryDaoCarts extends memoryContainer {
   deleteProduct(cartId, productId) {
     let cart = this.getById(cartId);
     let productToDelete = cart.products.find(
-      (product) => product.id == productId
+      (product) => product._id == productId
     );
     if (productToDelete) {
       let index = cart.products.indexOf(productToDelete);
