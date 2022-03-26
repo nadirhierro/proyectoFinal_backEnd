@@ -5,8 +5,8 @@ let newCart = document.getElementById("newCart");
 let cartTemplate = `
 {{#if carts}}
   {{#each carts}}
-    <div class="cart" name="{{this.id}}">
-      <h4>ID :{{this.id}}</h4>
+    <div class="cart" name="{{this._id}}">
+      <h4>ID :{{this._id}}</h4>
       <h5>Timestamp: {{this.timestamp}}</h5>
       <div class="cart__products">
         <h4>Productos del carrito</h4>
@@ -15,7 +15,7 @@ let cartTemplate = `
             <div class="cart__products__product">
               <p>nombre: {{this.name}}</p>
               <p>precio: {{this.price}}</p>
-              <form class="cartProductDelete" name="{{this.id}}">
+              <form class="cartProductDelete" name="{{this._id}}">
                 <button type="submit" class="btn btn-primary"> Quitar producto</button>
               </form>
             </div>
@@ -25,7 +25,7 @@ let cartTemplate = `
           {{/if}}
       </div>
       <div class="cart__forms">
-        <form class="cart__productAdd" name="{{this.id}}">
+        <form class="cart__productAdd" name="{{this._id}}">
           <h3>Agregar producto al carrito</h3>
           <div class="mb-3">
             <label for="id">ID</label>
@@ -70,7 +70,6 @@ socket.on("carts", (data) => {
       return res.json();
     })
     .then((json) => {
-      console.log(json);
       const template = Handlebars.compile(cartTemplate);
       const html = template({ carts: json });
       document.getElementById("cartsContainer").innerHTML = html;

@@ -1,13 +1,12 @@
-import Container from "../container/container.js";
-import ProductsContainer from "../productsContainer/productsContainer.js";
-import moment from "moment";
+import firebaseContainer from "../../firebaseContainer.js";
+import firebaseDaoProducts from "../productsContainer/firebaseDaoProducts.js";
 
-let Products = new ProductsContainer();
+let Products = new firebaseDaoProducts();
 
-export default class CartContainer extends Container {
-  constructor(fileName) {
-    super(fileName);
-    this.fileName = "./data/carts.json";
+export default class firebaseDaoCarts extends firebaseContainer {
+  constructor(collectionName) {
+    super(collectionName);
+    this.collectionName = "carts";
   }
 
   async createCart(products = []) {
@@ -37,8 +36,9 @@ export default class CartContainer extends Container {
       let cart = await this.getById(cartId);
       let productToAdd = await Products.getById(productId);
       if (productToAdd) {
-        cart.products.push(productToAdd);
-        await this.change(cart);
+        cart.products.push({ _id: productId, ...productToAdd });
+        let newCart = { id: cartId, ...cart };
+        await this.change(newCart);
         return cart;
       } else {
         return false;
@@ -50,14 +50,16 @@ export default class CartContainer extends Container {
 
   async deleteProduct(cartId, productId) {
     try {
+      console.log("si");
       let cart = await this.getById(cartId);
       let productToDelete = cart.products.find(
-        (product) => product.id == productId
+        (product) => product._id == productId
       );
       if (productToDelete) {
         let index = cart.products.indexOf(productToDelete);
         cart.products.splice(index, 1);
-        await this.change(cart);
+        let newCart = { id: cartId, ...cart };
+        await this.change(newCart);
         return {
           state: `Producto con id ${productId} eleminado del carrito con id ${cartId}`,
         };

@@ -1,9 +1,9 @@
-import Container from "../container/container.js";
+import firebaseContainer from "../../firebaseContainer.js";
 
-export default class ProductsContainer extends Container {
-  constructor(fileName) {
-    super(fileName);
-    this.fileName = "./data/products.json";
+export default class firebaseDaoProducts extends firebaseContainer {
+  constructor(collectionName) {
+    super(collectionName);
+    this.collectionName = "products";
   }
 
   validate(product) {
@@ -32,7 +32,7 @@ export default class ProductsContainer extends Container {
         return { state: `Información errónea, chequear data de producto` };
       }
     } catch (err) {
-      return err;
+      console.log(err);
     }
   }
 
@@ -51,7 +51,7 @@ export default class ProductsContainer extends Container {
         return { state: `Información errónea, chequear data de producto` };
       }
     } catch (err) {
-      return err;
+      console.log(err);
     }
   }
 
@@ -64,7 +64,7 @@ export default class ProductsContainer extends Container {
         return { state: `No existe un producto con id ${productId}` };
       }
     } catch (err) {
-      return err;
+      console.log(err);
     }
   }
 }

@@ -7,8 +7,8 @@ let grilla = `
                 <img src="{{this.thumbnail}}" alt="{{this.name}}" class="img-fluid" />
             </div>
             <div class="grillaProductos__tarjeta__data">
-            <h2>ID: {{this.id}}</h2>
-                <form class="productData" name="{{this.id}}">
+            <h2>ID: {{this._id}}</h2>
+                <form class="productData" name="{{this._id}}">
                     <div class="mb-3">
                         <label for="name" class="form-label">Nombre:</label>
                         <input type="text" class="form-control" name="name" value={{this.name}} />
@@ -35,7 +35,7 @@ let grilla = `
                     </div>
                     <button type="submit" class="btn btn-primary update">Actualizar</button>
                 </form>
-                <form class="delete" name="{{this.id}}">
+                <form class="delete" name="{{this._id}}">
                     <button type="submit" class="btn btn-primary">Eliminar producto</button>
                 </form>
             </div>
@@ -109,7 +109,7 @@ socket.on("products", (data) => {
               return res.json();
             })
             .then((json) => {
-              socket.emit("productos", json);
+              socket.emit("products", json);
             });
         });
       }

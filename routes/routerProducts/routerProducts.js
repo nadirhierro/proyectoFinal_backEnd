@@ -1,9 +1,9 @@
 import express from "express";
-import ProductsContainer from "../../components/productsContainer/productsContainer.js";
+import { productDatabase } from "../../components/containers/daos/index.js";
 
 const { Router } = express;
 
-const products = new ProductsContainer();
+const products = new productDatabase();
 
 let routerProductos = new Router();
 let admin = true;
@@ -12,7 +12,7 @@ routerProductos.get("/:id?", async (req, res, next) => {
   try {
     let id = req.params.id;
     if (id) {
-      let product = await products.getById(Number(id));
+      let product = await products.getById(id);
       res.json(product);
     } else {
       let allProducts = await products.getAll();
@@ -20,6 +20,7 @@ routerProductos.get("/:id?", async (req, res, next) => {
     }
   } catch (err) {
     res.json(err);
+    console.log("no");
   }
 });
 
@@ -62,7 +63,7 @@ routerProductos.delete("/:id", async (req, res, next) => {
   try {
     if (admin) {
       let id = req.params.id;
-      let deleted = await products.deleteProduct(Number(id));
+      let deleted = await products.deleteProduct(id);
       res.json(deleted);
     } else {
       res.json({

@@ -1,11 +1,11 @@
 import express from "express";
-import CartContainer from "../../components/cartContainer/cartContainer.js";
+import { cartDatabase } from "../../components/containers/daos/index.js";
 
 const { Router } = express;
 
 let routerCart = new Router();
 
-let carts = new CartContainer();
+let carts = new cartDatabase();
 
 routerCart.post("/", async (req, res, next) => {
   try {
@@ -19,7 +19,7 @@ routerCart.post("/", async (req, res, next) => {
 routerCart.delete("/:id", async (req, res, next) => {
   try {
     let id = req.params.id;
-    let deleted = await carts.deleteById(Number(id));
+    let deleted = await carts.deleteById(id);
     res.json(deleted);
   } catch (err) {
     res.json(err);
@@ -38,7 +38,7 @@ routerCart.get("/", async (req, res, next) => {
 routerCart.get("/:id/products", async (req, res, next) => {
   try {
     let cartId = req.params.id;
-    let products = await carts.getProducts(Number(cartId));
+    let products = await carts.getProducts(cartId);
     res.json(products);
   } catch (err) {
     res.json(err);
@@ -49,7 +49,7 @@ routerCart.post("/:id/products/:id__prod", async (req, res, next) => {
   try {
     let cartId = req.params.id;
     let productId = req.params.id__prod;
-    let added = await carts.addProduct(Number(cartId), Number(productId));
+    let added = await carts.addProduct(cartId, productId);
     res.json(added);
   } catch (err) {
     res.json(err);
@@ -60,7 +60,7 @@ routerCart.delete("/:id/products/:id__prod", async (req, res, next) => {
   try {
     let cartID = req.params.id;
     let productID = req.params.id__prod;
-    let deleted = await carts.deleteProduct(Number(cartID), Number(productID));
+    let deleted = await carts.deleteProduct(cartID, productID);
     res.json(deleted);
   } catch (err) {
     res.json(err);

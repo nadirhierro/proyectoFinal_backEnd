@@ -1,7 +1,8 @@
 import express from "express";
 import { Server } from "socket.io";
 import { createServer } from "http";
-import config from "./config/index.js";
+import cors from "cors";
+import { config } from "./config/index.js";
 import routerProducts from "./routes/routerProducts/routerProducts.js";
 import routerCart from "./routes/routerCart/routerCart.js";
 
@@ -16,6 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use("/api/products", routerProducts);
 app.use("/api/cart", routerCart);
+app.use(cors(`${config.cors}`));
 
 // Response para rutas no definidas
 app.use("*", (req, res, next) => {

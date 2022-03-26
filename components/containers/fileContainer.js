@@ -1,7 +1,7 @@
 import * as fs from "node:fs";
 import moment from "moment";
 
-export default class Container {
+export default class fileContainer {
   constructor(fileName) {
     this.fileName = fileName;
   }
