@@ -3,7 +3,7 @@ import { productDatabase } from "../../components/containers/daos/index.js";
 
 const { Router } = express;
 
-const products = new productDatabase();
+const Products = new productDatabase();
 
 let routerProducts = new Router();
 let admin = true;
@@ -12,10 +12,10 @@ routerProducts.get("/:id?", async (req, res, next) => {
   try {
     let id = req.params.id;
     if (id) {
-      let product = await products.getById(id);
+      let product = await Products.getById(id);
       res.json(product);
     } else {
-      let allProducts = await products.getAll();
+      let allProducts = await Products.getAll();
       res.json(allProducts);
     }
   } catch (err) {
@@ -28,7 +28,7 @@ routerProducts.post("/", async (req, res, next) => {
   try {
     if (admin) {
       let product = req.body;
-      let saved = await products.addProduct(product);
+      let saved = await Products.addProduct(product);
       res.json(saved);
     } else {
       res.json({
@@ -46,7 +46,7 @@ routerProducts.put("/:id", async (req, res, next) => {
     if (admin) {
       let id = req.params.id;
       let newData = req.body;
-      let changed = await products.changeProduct(id, newData);
+      let changed = await Products.changeProduct(id, newData);
       res.json(changed);
     } else {
       res.json({
@@ -63,7 +63,7 @@ routerProducts.delete("/:id", async (req, res, next) => {
   try {
     if (admin) {
       let id = req.params.id;
-      let deleted = await products.deleteProduct(id);
+      let deleted = await Products.deleteProduct(id);
       res.json(deleted);
     } else {
       res.json({
@@ -76,4 +76,4 @@ routerProducts.delete("/:id", async (req, res, next) => {
   }
 });
 
-export { routerProducts, products };
+export { routerProducts, Products };

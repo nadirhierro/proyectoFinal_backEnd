@@ -33,6 +33,7 @@ export default class fileContainer {
   async save(obj) {
     try {
       let data = await this.getAll();
+      console.log(data);
       let id = 1;
       if (data.length > 0) {
         let ids = data.map((item) => item.id);

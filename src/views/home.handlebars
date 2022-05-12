@@ -1,0 +1,90 @@
+<main class="container-fluid">
+  <div class="row bienvenido">
+    <div
+      class="col-12 d-flex flex-column justify-content-between p-0 align-items-center"
+    >
+      <h2>Bienvenido {{username}} </h2>
+      <div>
+        <img src={{photoUrl}} alt="" />
+      </div>
+      <h3>Email: {{email}}</h3>
+      <a
+        href="http://localhost:8080/logout"
+        class="btn btn-primary m-2"
+      >Salir</a>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-6 mt-2">
+      <h2 class="text-center">Agregar un producto</h2>
+      <form id="products">
+        <div class="mb-3">
+          <label for="title" class="form-label">Product title</label>
+          <input type="text" class="form-control" name="title" />
+        </div>
+        <div class="mb-3">
+          <label for="price" class="form-label">Product price</label>
+          <input type="text" class="form-control" name="price" />
+        </div>
+        <div class="mb-3">
+          <label for="thumbnail" class="form-label">Product thumbnail</label>
+          <input type="text" class="form-control" name="thumbnail" />
+        </div>
+        <button type="submit" class="btn btn-primary">Agregar</button>
+      </form>
+    </div>
+  </div>
+  <div class="row justify-content-center mt-5">
+    <h3 class="mb-3 text-center">Lista de productos</h3>
+    <div id="lista" class="d-flex justify-content-center"></div>
+  </div>
+  <div class="row justify-content-center mt-5">
+    <h3 class="mb-3 text-center">Centro de mensajes</h3>
+    <h4 class="mb-3 text-center" id="percentage"></h4>
+    <div class="col-12 d-flex justify-content-center">
+      <form id="messages" class="d-flex flex-column justify-content-center">
+        <div class="mb-3 d-flex flex-column">
+          <label for="email" class="form-label">Email</label>
+          <input type="text" placeholder="Ingrese su email" name="email" />
+        </div>
+        <div class="mb-3 d-flex flex-column">
+          <label for="alias" class="form-label">Alias</label>
+          <input type="text" placeholder="Ingrese su alias" name="alias" />
+        </div>
+        <div class="mb-3 d-flex flex-column">
+          <label for="name" class="form-label">Nombre</label>
+          <input type="text" placeholder="Ingrese su nombre" name="name" />
+        </div>
+        <div class="mb-3 d-flex flex-column">
+          <label for="surname" class="form-label">Apellido</label>
+          <input type="text" placeholder="Ingrese su apellido" name="surname" />
+        </div>
+        <div class="mb-3 d-flex flex-column">
+          <label for="age" class="form-label">Edad</label>
+          <input type="text" placeholder="Ingrese su edad" name="age" />
+        </div>
+        <div class="mb-3 d-flex flex-column">
+          <label for="avatar" class="form-label">Avatar</label>
+          <input
+            type="text"
+            placeholder="Ingrese la url de su avatar"
+            name="avatar"
+          />
+        </div>
+        <div class="mb-3 d-flex flex-column">
+          <label for="mensaje" class="form-label">Mensaje</label>
+          <input type="text" placeholder="Ingrese su mensaje" name="mensaje" />
+        </div>
+        <button type="submit" class="btn btn-primary">
+          Enviar mensaje
+        </button>
+      </form>
+    </div>
+    <div
+      class="col-6 d-flex flex-column justify-content-center text-center mt-5"
+      id="mensajes"
+    ></div>
+  </div>
+  <script src="./assets/js/products.js"></script>
+  <script src="./assets/js/messages.js"></script>
+</main>

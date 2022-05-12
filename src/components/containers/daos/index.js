@@ -2,18 +2,23 @@ import firebaseDaoCarts from "./cartsContainer/firebaseDaoCarts.js";
 import firebaseDaoProducts from "./productsContainer/firebaseDaoProducts.js";
 import mongodbDaoCarts from "./cartsContainer/mongodbDaoCarts.js";
 import mongodbDaoProducts from "./productsContainer/mongodbDaoProducts.js";
+import mongodbDaoUsers from "./usersContainer/mongodbDaoUsers.js";
 import fileDaoCarts from "./cartsContainer/fileDaoCarts.js";
 import fileDaoProducts from "./productsContainer/fileDaoProducts.js";
 import memoryDaoCarts from "./cartsContainer/memoryDaoCarts.js";
 import memoryDaoProducts from "./productsContainer/memoryDaoProducts.js";
-import dotenv from "dotenv";
 
-dotenv.config({ silent: true });
+// import dotenv from "dotenv";
 
-const container_type = process.env.npm_config_container_type
-  ? process.env.npm_config_container_type
-  : "file";
+// dotenv.config({ silent: true });
 
+// const container_type = process.env.npm_config_container_type
+//   ? process.env.npm_config_container_type
+//   : "file";
+
+const container_type = "mongodb";
+
+let userDatabase;
 let cartDatabase;
 let productDatabase;
 
@@ -24,6 +29,7 @@ if (container_type == "file") {
   cartDatabase = firebaseDaoCarts;
   productDatabase = firebaseDaoProducts;
 } else if (container_type == "mongodb") {
+  userDatabase = mongodbDaoUsers;
   cartDatabase = mongodbDaoCarts;
   productDatabase = mongodbDaoProducts;
 } else if (container_type == "memory") {
@@ -31,4 +37,4 @@ if (container_type == "file") {
   productDatabase = memoryDaoProducts;
 }
 
-export { cartDatabase, productDatabase };
+export { cartDatabase, productDatabase, userDatabase };

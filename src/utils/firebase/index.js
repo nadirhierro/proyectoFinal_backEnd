@@ -2,7 +2,7 @@ import admin from "firebase-admin";
 import { createRequire } from "module";
 
 const require = createRequire(import.meta.url);
-const json = require("./config/ecommerce-d74da-firebase-adminsdk-to3ws-c5e56d6f01.json");
+const json = require("../../config/ecommerce-d74da-firebase-adminsdk-to3ws-138ca9ccce.json");
 
 let serviceAccount = json;
 
