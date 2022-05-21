@@ -1,5 +1,5 @@
 import express from "express";
-import { productDatabase } from "../../components/containers/daos/index.js";
+import { productDatabase } from "../../../components/containers/daos/index.js";
 
 const { Router } = express;
 
@@ -21,6 +21,16 @@ routerProducts.get("/:id?", async (req, res, next) => {
   } catch (err) {
     res.json(err);
     console.log("no");
+  }
+});
+
+routerProducts.get("/category/:categoryId?", async (req, res, next) => {
+  try {
+    let categoryId = req.params.categoryId;
+    let products = await Products.getByCategory(categoryId);
+    res.json(products);
+  } catch (err) {
+    console.log(err);
   }
 });
 

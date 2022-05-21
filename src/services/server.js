@@ -34,16 +34,19 @@ app.use(
       mongoUrl: db.mongo_atlas,
       mongoOptions: db.advancedOptions,
       autoRemove: "native",
+      crypto: {
+        secret: db.crypto
+      }
     }),
     cookie: {
       httpOnly: false,
       secure: false,
-      maxAge: 600000,
+      maxAge: 600000
     },
     secret: config.sessionSecret,
     rolling: true,
     resave: true,
-    saveUninitialized: true,
+    saveUninitialized: true
   })
 );
 app.use(passport.initialize());
@@ -55,7 +58,7 @@ app.use("/", router);
 // Response para rutas no definidas
 app.use("*", (req, res, next) => {
   res.json({
-    error: `ruta ${req.params[0]} y método ${req.method} no implementada`,
+    error: `ruta ${req.params[0]} y método ${req.method} no implementada`
   });
 });
 

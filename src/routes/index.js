@@ -1,14 +1,12 @@
 import express from "express";
 import routerHome from "./routerHome/index.js";
-import { routerProducts } from "./routerProducts/routerProducts.js";
-import routerCart from "./routerCart/routerCart.js";
+import routerApi from "./routerApi/index.js";
 
 const { Router } = express;
 
 const router = new Router();
 
-router.use("/api/cart", routerCart);
-router.use("/api/products", routerProducts);
+router.use("/api", routerApi);
 router.use("/", routerHome);
 
 export default router;

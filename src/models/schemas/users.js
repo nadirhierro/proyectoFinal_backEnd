@@ -1,7 +1,10 @@
 import Joi from "joi";
 
 let email = Joi.string().email().required();
-let password = Joi.string().required();
+let password = Joi.object({
+  iv: Joi.string(),
+  content: Joi.string()
+}).required();
 let name = Joi.string().required();
 let address = Joi.string().required();
 let phone = Joi.number().required();
@@ -17,7 +20,7 @@ let userSchema = {
   address,
   phone,
   avatar,
-  isAdmin,
+  isAdmin
 };
 
 export default userSchema;

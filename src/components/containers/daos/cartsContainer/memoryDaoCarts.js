@@ -6,6 +6,7 @@ let Products = new memoryDaoProducts();
 export default class memoryDaoCarts extends memoryContainer {
   constructor() {
     super();
+    this.container = [];
   }
 
   createCart(products = []) {
@@ -44,11 +45,11 @@ export default class memoryDaoCarts extends memoryContainer {
       cart.products.splice(index, 1);
       this.change(cart);
       return {
-        state: `Producto con id ${productId} eleminado del carrito con id ${cartId}`,
+        state: `Producto con id ${productId} eleminado del carrito con id ${cartId}`
       };
     } else {
       return {
-        state: `No existe un producto con id ${productId} en el carrito ${cartId}`,
+        state: `No existe un producto con id ${productId} en el carrito ${cartId}`
       };
     }
   }

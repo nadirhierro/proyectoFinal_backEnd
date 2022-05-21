@@ -2,85 +2,54 @@
   <div class="row justify-content-center mt-2">
     <div class="col-6 bg-secondary">
       <h2 class="text-center">Registro de usuario</h2>
-      <form
-        id="signup"
-        action="/signup"
-        method="post"
-        role="form"
-        autocomplete="off"
-      >
+      <form id="signup" action="/signup" method="post" role="form" autocomplete="off" enctype="multipart/form-data"
+        name="signup">
         <div class="mb-3">
           <label for="username" class="form-label">Email</label>
-          <input
-            class="form-control"
-            id="username"
-            name="username"
-            type="email"
-            required
-          />
+          <input class="form-control" id="username" name="username" type="email" required />
         </div>
         <div class="mb-3">
           <label for="password" class="form-label">Contraseña</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            class="form-control"
-            required
-          />
+          <input type="password" id="password" name="password" class="form-control" required />
         </div>
         <div class="mb-3">
           <label for="name" class="form-label">Nombre</label>
-          <input
-            class="form-control"
-            id="name"
-            name="name"
-            type="text"
-            required
-          />
+          <input class="form-control" id="name" name="name" type="text" required />
         </div>
         <div class="mb-3">
           <label for="address" class="form-label">Dirección</label>
-          <input
-            class="form-control"
-            id="address"
-            name="address"
-            type="text"
-            required
-          />
+          <input class="form-control" id="address" name="address" type="text" required />
         </div>
         <div class="mb-3">
           <label for="age" class="form-label">Edad</label>
-          <input
-            class="form-control"
-            id="age"
-            name="age"
-            type="number"
-            required
-          />
+          <input class="form-control" id="age" name="age" type="number" required />
         </div>
         <div class="mb-3">
           <label for="phone" class="form-label">Teléfono</label>
-          <input
-            class="form-control"
-            id="phone"
-            name="phone"
-            type="number"
-            required
-          />
+          <input class="form-control" id="phone" name="phone" type="tel" required />
         </div>
         <div class="mb-3">
           <label for="avatar" class="form-label">Avatar</label>
-          <input
-            class="form-control"
-            id="avatar"
-            name="avatar"
-            type="text"
-            required
-          />
+          <input class="form-control" id="avatar" name="avatar" type="text" required />
+        </div>
+        <div class="mb-3">
+          <label for="avatarFile" class="form-label">Archivo avatar</label>
+          <input class="form-control" id="avatarFile" name="avatar" type="file" />
         </div>
         <button type="submit" class="btn btn-primary">Registrarse</button>
       </form>
     </div>
   </div>
 </main>
+<script>
+  var input = document.getElementById("phone");
+  window.intlTelInput(input, {
+    initialCountry: "auto",
+    geoIpLookup: function (success, failure) {
+      $.get("https://ipinfo.io", function () { }, "jsonp").always(function (resp) {
+        var countryCode = (resp && resp.country) ? resp.country : "us";
+        success(countryCode);
+      });
+    },
+  });
+</script>

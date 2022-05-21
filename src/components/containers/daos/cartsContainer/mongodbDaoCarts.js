@@ -10,9 +10,9 @@ export default class mongodbDaoCarts extends mongodbContainer {
     this.model = cartModel;
   }
 
-  async createCart(products = []) {
+  async createCart(products = [], user) {
     try {
-      let newCart = await this.save({ products: products });
+      let newCart = await this.save({ products: products, user: user });
       return newCart;
     } catch (err) {
       return err;
@@ -60,11 +60,11 @@ export default class mongodbDaoCarts extends mongodbContainer {
         cart.products.splice(index, 1);
         await this.change(cart);
         return {
-          state: `Producto con id ${productId} eleminado del carrito con id ${cartId}`,
+          state: `Producto con id ${productId} eleminado del carrito con id ${cartId}`
         };
       } else {
         return {
-          state: `No existe un producto con id ${productId} en el carrito ${cartId}`,
+          state: `No existe un producto con id ${productId} en el carrito ${cartId}`
         };
       }
     } catch (err) {

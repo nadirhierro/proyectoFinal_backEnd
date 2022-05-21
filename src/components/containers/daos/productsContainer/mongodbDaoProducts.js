@@ -6,19 +6,33 @@ export default class mongodbDaoProducts extends mongodbContainer {
     super(model);
     this.model = productModel;
   }
-  validate(product) {
-    if (
-      product.name &&
-      product.thumbnail &&
-      product.description &&
-      product.code &&
-      product.price &&
-      product.stock
-    ) {
-      console.log(product.thumbnail);
-      return true;
-    } else {
-      return false;
+
+  async getByCategory(category) {
+    try {
+      let products = await this.model.find({ category: category });
+      if (products) {
+        return products;
+      } else {
+        return { error: "No existen productos para esa categoría" };
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async getBysubategory(category, subcategory) {
+    try {
+      let products = await this.model.find({
+        category: category,
+        subcategory: subcategory
+      });
+      if (products) {
+        return products;
+      } else {
+        return { error: "No existen productos para esa subcategoría" };
+      }
+    } catch (err) {
+      console.log(err);
     }
   }
 
@@ -38,17 +52,12 @@ export default class mongodbDaoProducts extends mongodbContainer {
 
   async changeProduct(productId, productData) {
     try {
-      let validated = this.validate(productData);
-      if (validated) {
-        let product = { id: productId, ...productData };
-        let changed = await this.change(product);
-        if (changed) {
-          return { state: `Producto con id ${productId} cambiado` };
-        } else {
-          return { state: `No existe un producto con id ${productId}` };
-        }
+      let product = { id: productId, ...productData };
+      let changed = await this.change(product);
+      if (changed) {
+        return { state: `Producto con id ${productId} cambiado` };
       } else {
-        return { state: `Información errónea, chequear data de producto` };
+        return { state: `No existe un producto con id ${productId}` };
       }
     } catch (err) {
       console.log(err);
@@ -63,6 +72,13 @@ export default class mongodbDaoProducts extends mongodbContainer {
       } else {
         return { state: `No existe un producto con id ${productId}` };
       }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async takeProduct(productId) {
+    try {
     } catch (err) {
       console.log(err);
     }

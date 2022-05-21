@@ -3,6 +3,7 @@ import memoryContainer from "../../memoryContainer.js";
 export default class memoryDaoProducts extends memoryContainer {
   constructor() {
     super();
+    this.container = [];
   }
 
   validate(product) {

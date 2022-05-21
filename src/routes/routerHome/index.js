@@ -1,93 +1,49 @@
 import express from "express";
-import passport from "passport";
-import LocalStrategy from "passport-local";
-import { userDatabase } from "../../components/containers/daos/index.js";
+import { upload } from "../../utils/multer/index.js";
+import { passport } from "../../services/passport.js";
+import isAuth from "../../utils/isAuth/index.js";
 
 const { Router } = express;
 
-const users = new userDatabase();
-
 let routerHome = new Router();
 
-passport.use(
-  "login",
-  new LocalStrategy(async (username, password, done) => {
-    try {
-      let userArray = await users.getUser(username);
-      let user = userArray[0];
-      if (!user) return done(null, false);
-      if (user.password != password) return done(null, false);
-      return done(null, user);
-    } catch (err) {
-      console.log(err);
-    }
-  })
-);
-
-passport.use(
-  "signup",
-  new LocalStrategy(
-    { passReqToCallback: true },
-    async (req, username, password, done) => {
-      try {
-        let email = req.body.username;
-        let password = req.body.password;
-        let name = req.body.name;
-        let address = req.body.address;
-        let age = req.body.age;
-        let phone = req.body.phone;
-        let avatar = req.body.avatar;
-        let user = await users.getUser(username);
-        if (user?.length > 0) return done(null, false);
-        let newUser = {
-          email,
-          password,
-          name,
-          address,
-          age,
-          phone,
-          avatar,
-          isAdmin: false,
-        };
-        console.log(newUser);
-        await users.save(newUser);
-        return done(null, newUser);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-  )
-);
-
-// Serialize y desirialize
-passport.serializeUser((user, done) => {
-  done(null, user.email);
+routerHome.get("/", isAuth, (req, res, next) => {
+  res.redirect("/home");
 });
-
-passport.deserializeUser((email, done) => {
-  let user = users.getUser(email);
-  done(null, user);
-});
-
-routerHome.get("/", (req, res, next) => {
-  res.render("index");
-});
-
-// Login
 
 routerHome.get("/login", (req, res, next) => {
   res.render("login");
 });
 
-routerHome.get("/logout", (req, res, next) => {
-  res.render("logout");
+routerHome.get("/logout", async (req, res, next) => {
+  try {
+    let user = await req.user;
+    req.session.destroy((err) => {
+      if (!err) {
+        res.render("logout", { name: user[0].name });
+      } else {
+        res.send({ status: "logout ERROR", body: err });
+      }
+    });
+  } catch (err) {
+    console.log(err);
+  }
 });
 
-routerHome.get("/home", (req, res, next) => {
-  res.render("home");
+routerHome.get("/home", isAuth, async (req, res, next) => {
+  try {
+    let user = await req.user;
+    console.log(user);
+    res.render("home", {
+      name: user[0].name,
+      thumbnail: user[0].avatar,
+      email: user[0].email,
+    });
+  } catch (err) {
+    console.log(err);
+  }
 });
 
-// Local Login
 routerHome.post(
   "/login",
   passport.authenticate("login", {
@@ -96,7 +52,6 @@ routerHome.post(
   })
 );
 
-// Local Signup
 routerHome.get("/signup", (req, res, next) => {
   res.render("signup");
 });
@@ -111,6 +66,7 @@ routerHome.get("/failsignup", (req, res, next) => {
 
 routerHome.post(
   "/signup",
+  upload.single("avatar"),
   passport.authenticate("signup", {
     successRedirect: "home",
     failureRedirect: "failsignup",

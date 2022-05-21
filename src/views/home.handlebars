@@ -1,90 +1,106 @@
-<main class="container-fluid">
-  <div class="row bienvenido">
-    <div
-      class="col-12 d-flex flex-column justify-content-between p-0 align-items-center"
-    >
-      <h2>Bienvenido {{username}} </h2>
-      <div>
-        <img src={{photoUrl}} alt="" />
+<header>
+  <!-- Nav de Bootstrap -->
+  <nav class="navbar navbar-expand-lg fixed-top header--nav">
+    <div class="container-fluid">
+      <a href="./">
+        <img
+          class="navbar-brand animate__animated animate__fadeIn"
+          src="./assets/img/logoChico.png"
+        />
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse linksNav" id="navbarNav">
+        <ul
+          class="navbar-nav w-100 justify-content-around animate__animated animate__fadeIn"
+        >
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              aria-current="page"
+              href="./index.html"
+            >Tienda</a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link animate__animated animate__fadeIn"
+              href="#nosotros"
+            >Nosotros</a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link animate__animated animate__fadeIn"
+              href="#ubicacion"
+            >Ubicación</a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link animate__animated animate__fadeIn"
+              href="#contacto"
+            >Contacto</a>
+          </li>
+          <li class="nav-item nav-itemCarrito">
+            <a
+              class="nav-link animate__animated animate__fadeIn carritoIconCaja"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasScrolling"
+              aria-controls="offcanvasScrolling"
+            >
+              <img
+                src="./assets/img/carrito/carrito.png"
+                alt=""
+                class="carritoIcon"
+              />
+            </a>
+          </li>
+        </ul>
       </div>
-      <h3>Email: {{email}}</h3>
-      <a
-        href="http://localhost:8080/logout"
-        class="btn btn-primary m-2"
-      >Salir</a>
+    </div>
+  </nav>
+</header>
+<main class="main">
+  <div class="notificacionContainer"></div>
+  <div class="container-fluid hero">
+    <div class="row justify-content-center">
+      <div
+        class="col-12 col-sm-10 col-md-8 col-lg-5 col-xl-4 cajaHeroLogo animate__animated animate__fadeIn"
+      >
+        <img
+          class="img-fluid heroLogo"
+          src="./assets/img/logo_white_large.png"
+          alt="Logo Sincopado"
+        />
+        <p class="heroLema">Siempre la mejor atención</p>
+      </div>
+      <div
+        class="col-12 col-md-12 col-md-6 col-lg-6 col-xl-4 texto animate__animated animate__fadeIn bienvenida pt-5"
+      >
+        <h2>Bienvenido a nuestra tienda</h2>
+        <p>
+          ¡Aprovechá todos nuestros productos con 18 cuotas sin interés!
+        </p>
+      </div>
+    </div>
+    <div class="row user justify-content-center">
+      <div class="col-12 d-flex flex-column align-items-center w-25">
+        <h4>Usuario: {{name}}</h4>
+        <p>Mail: {{email}}</p>
+        <img src={{thumbnail}} class="img-fluid avatar p-2" />
+        <a
+          href="http://localhost:8080/logout"
+          class="btn btn-primary logout"
+        >Logout</a>
+      </div>
     </div>
   </div>
-  <div class="row justify-content-center">
-    <div class="col-6 mt-2">
-      <h2 class="text-center">Agregar un producto</h2>
-      <form id="products">
-        <div class="mb-3">
-          <label for="title" class="form-label">Product title</label>
-          <input type="text" class="form-control" name="title" />
-        </div>
-        <div class="mb-3">
-          <label for="price" class="form-label">Product price</label>
-          <input type="text" class="form-control" name="price" />
-        </div>
-        <div class="mb-3">
-          <label for="thumbnail" class="form-label">Product thumbnail</label>
-          <input type="text" class="form-control" name="thumbnail" />
-        </div>
-        <button type="submit" class="btn btn-primary">Agregar</button>
-      </form>
-    </div>
-  </div>
-  <div class="row justify-content-center mt-5">
-    <h3 class="mb-3 text-center">Lista de productos</h3>
-    <div id="lista" class="d-flex justify-content-center"></div>
-  </div>
-  <div class="row justify-content-center mt-5">
-    <h3 class="mb-3 text-center">Centro de mensajes</h3>
-    <h4 class="mb-3 text-center" id="percentage"></h4>
-    <div class="col-12 d-flex justify-content-center">
-      <form id="messages" class="d-flex flex-column justify-content-center">
-        <div class="mb-3 d-flex flex-column">
-          <label for="email" class="form-label">Email</label>
-          <input type="text" placeholder="Ingrese su email" name="email" />
-        </div>
-        <div class="mb-3 d-flex flex-column">
-          <label for="alias" class="form-label">Alias</label>
-          <input type="text" placeholder="Ingrese su alias" name="alias" />
-        </div>
-        <div class="mb-3 d-flex flex-column">
-          <label for="name" class="form-label">Nombre</label>
-          <input type="text" placeholder="Ingrese su nombre" name="name" />
-        </div>
-        <div class="mb-3 d-flex flex-column">
-          <label for="surname" class="form-label">Apellido</label>
-          <input type="text" placeholder="Ingrese su apellido" name="surname" />
-        </div>
-        <div class="mb-3 d-flex flex-column">
-          <label for="age" class="form-label">Edad</label>
-          <input type="text" placeholder="Ingrese su edad" name="age" />
-        </div>
-        <div class="mb-3 d-flex flex-column">
-          <label for="avatar" class="form-label">Avatar</label>
-          <input
-            type="text"
-            placeholder="Ingrese la url de su avatar"
-            name="avatar"
-          />
-        </div>
-        <div class="mb-3 d-flex flex-column">
-          <label for="mensaje" class="form-label">Mensaje</label>
-          <input type="text" placeholder="Ingrese su mensaje" name="mensaje" />
-        </div>
-        <button type="submit" class="btn btn-primary">
-          Enviar mensaje
-        </button>
-      </form>
-    </div>
-    <div
-      class="col-6 d-flex flex-column justify-content-center text-center mt-5"
-      id="mensajes"
-    ></div>
-  </div>
-  <script src="./assets/js/products.js"></script>
-  <script src="./assets/js/messages.js"></script>
+
 </main>
