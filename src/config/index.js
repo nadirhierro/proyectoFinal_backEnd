@@ -7,7 +7,7 @@ const yargs = _yargs(process.argv.slice(2));
 
 // Seteo el puerto default y limpio los args
 const args = yargs.default({
-  port: process.env.PORT,
+  port: process.env.PORT || 8080,
   mode: process.env.MODE,
 }).argv;
 delete args["_"];
