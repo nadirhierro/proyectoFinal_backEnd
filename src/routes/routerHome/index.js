@@ -1,76 +1,28 @@
 import express from "express";
-import { upload } from "../../utils/multer/index.js";
-import { passport } from "../../services/passport.js";
-import isAuth from "../../utils/isAuth/index.js";
+import authController from "../../components/controllers/authController/index.js";
 
 const { Router } = express;
 
+let auth = new authController();
+
 let routerHome = new Router();
 
-routerHome.get("/", isAuth, (req, res, next) => {
-  res.redirect("/home");
-});
+routerHome.get("/login", auth.goLogin);
 
-routerHome.get("/login", (req, res, next) => {
-  res.render("login");
-});
+routerHome.get("/signup", auth.goSignUp);
 
-routerHome.get("/logout", async (req, res, next) => {
-  try {
-    let user = await req.user;
-    req.session.destroy((err) => {
-      if (!err) {
-        res.render("logout", { name: user[0].name });
-      } else {
-        res.send({ status: "logout ERROR", body: err });
-      }
-    });
-  } catch (err) {
-    console.log(err);
-  }
-});
+routerHome.get("/", auth.isAuth, auth.goIndex);
 
-routerHome.get("/home", isAuth, async (req, res, next) => {
-  try {
-    let user = await req.user;
-    console.log(user);
-    res.render("home", {
-      name: user[0].name,
-      thumbnail: user[0].avatar,
-      email: user[0].email,
-    });
-  } catch (err) {
-    console.log(err);
-  }
-});
+routerHome.post("/login", auth.makeLogin);
 
-routerHome.post(
-  "/login",
-  passport.authenticate("login", {
-    successRedirect: "home",
-    failureRedirect: "faillogin",
-  })
-);
+routerHome.get("/logout", auth.makeLogout);
 
-routerHome.get("/signup", (req, res, next) => {
-  res.render("signup");
-});
+routerHome.post("/signup", auth.uploadAvatar, auth.makeSignup);
 
-routerHome.get("/faillogin", (req, res, next) => {
-  res.render("faillogin");
-});
+routerHome.get("/home", auth.isAuth, auth.goHome);
 
-routerHome.get("/failsignup", (req, res, next) => {
-  res.render("failsignup");
-});
+routerHome.get("/faillogin", auth.failLogin);
 
-routerHome.post(
-  "/signup",
-  upload.single("avatar"),
-  passport.authenticate("signup", {
-    successRedirect: "home",
-    failureRedirect: "failsignup",
-  })
-);
+routerHome.get("/failsignup", auth.failSignup);
 
 export default routerHome;

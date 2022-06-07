@@ -1,11 +1,10 @@
 import passport from "passport";
 import { createTransport } from "nodemailer";
 import LocalStrategy from "passport-local";
-import { userDatabase } from "../components/containers/daos/index.js";
+import userService from "../components/services/users/index.js";
 import { encrypt, decrypt } from "../services/encrypt.js";
-import { sendMailNewUser } from "./sendMail.js";
 
-const users = new userDatabase();
+const users = new userService();
 
 const transporter = createTransport({
   host: "smtp.ethereal.email",
@@ -20,8 +19,7 @@ passport.use(
   "login",
   new LocalStrategy(async (username, password, done) => {
     try {
-      let userArray = await users.getUser(username);
-      let user = userArray[0];
+      let user = await users.getUser(username);
       if (!user) return done(null, false);
       if (decrypt(user.password) !== password) return done(null, false);
       return done(null, user);
@@ -45,7 +43,7 @@ passport.use(
         let phone = req.body.phone;
         let avatar = req.body.avatar;
         let user = await users.getUser(username);
-        if (user?.length > 0) return done(null, false);
+        if (user) return done(null, false);
         let newUser = {
           email,
           password,
@@ -56,8 +54,7 @@ passport.use(
           avatar,
           isAdmin: false,
         };
-        await users.save(newUser);
-        await sendMailNewUser(newUser);
+        await users.newUser(newUser);
         return done(null, newUser);
       } catch (err) {
         console.log(err);

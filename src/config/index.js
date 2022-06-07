@@ -37,4 +37,11 @@ let twilioConfig = {
   token: process.env.TWILIO_TOKEN,
 };
 
-export { config, cryptoConfig, db, twilioConfig };
+let mail = {
+  host: process.env.MAILER_HOST,
+  port: process.env.MAILER_PORT,
+  user: process.env.MAILER_USER,
+  pass: process.env.MAILER_PASS,
+};
+
+export { config, cryptoConfig, db, twilioConfig, mail };
